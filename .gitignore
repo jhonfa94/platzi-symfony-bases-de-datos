@@ -1,0 +1,27 @@
+# Ignore directory data in mariadb
+mariadb/data
+
+# Ingore directory vendor in src
+src/vendor
+
+# Ingore directory node_modules in src
+src/node_modules
+
+
+###> symfony/framework-bundle ###
+src/.env.local
+src/.env.local.php
+src/.env.*.local
+src/config/secrets/prod/prod.decrypt.private.php
+src/public/bundles/
+src/var/
+src/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-bundle ###
+src/node_modules/
+src/public/build/
+src/npm-debug.log
+src/yarn-error.log
+###< symfony/webpack-encore-bundle ###
+
