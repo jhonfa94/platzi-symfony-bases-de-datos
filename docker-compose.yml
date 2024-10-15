@@ -1,0 +1,56 @@
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    container_name: symfony-db-nginx
+    restart: always
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - '8000:80'
+    expose:
+      - '8000'
+    depends_on:
+      - php-fpm
+    networks:
+      - symfony-db-network
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: ./php/Dockerfile
+    container_name: symfony-db-php
+    restart: always
+    volumes:
+      - ./src:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - symfony-db-network
+
+  mariadb:
+    # image: mariadb:10.6.16
+    image: mariadb:11.5.2
+    container_name: symfony-db-mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: root   # Cambia esto por una contraseña segura
+      # MARIADB_DATABASE: my_database          # Nombre de la base de datos inicial
+      # MARIADB_USER: my_user                  # Usuario de la base de datos
+      # MARIADB_PASSWORD: my_password          # Contraseña del usuario
+    ports:
+      - "3306:3306"                        # Puerto para acceder a MariaDB
+    restart: always
+    volumes:
+      - ./mariadb/data:/var/lib/mysql        # Persistencia de datos en un volumen
+      - ./mariadb/conf/custom.cnf:/etc/mysql/conf.d/custom.cnf  # Configuración personalizada
+      - ./mariadb/logs:/var/log/mysql
+    networks:
+      - symfony-db-network
+
+networks:
+  symfony-db-network:
+    driver: bridge
+
+
+
+

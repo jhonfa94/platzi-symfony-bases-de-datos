@@ -1,0 +1,9 @@
+# Ignore directory data in mariadb
+mariadb/data
+
+# Ingore directory vendor in src
+src/vendor
+
+# Ingore directory node_modules in src
+src/node_modules
+
